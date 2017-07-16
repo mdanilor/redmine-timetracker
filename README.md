@@ -1,2 +1,2 @@
 # redmine-timetracker
-Windows application designed to help you track your time using Redmine Issues.
+Aplicação Windows feita para monitoramento e controle de tempo no lançamento de tarefas utilizando Redmine.
