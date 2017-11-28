@@ -1,0 +1,42 @@
+﻿<Window x:Class="FTTW.Authentication"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FTTW"        
+        mc:Ignorable="d"
+        Closing="Window_Closing"      
+        ResizeMode="NoResize"
+        Title="Fazer login" Height="200" Width="500">
+    <Grid>
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="26"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="320"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Grid.Row="0" Margin="5">Redmine</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="1" Margin="5">Login</TextBlock>
+            <TextBlock Grid.Column="0" Grid.Row="2" Margin="5">Senha</TextBlock>
+            <!--<TextBox Grid.Column="1" Grid.Row="0" Margin="3" Name="txtRedmineAddress"                     
+                     behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding History}"/> -->
+            <ComboBox Grid.Column="1" Grid.Row="0" Margin="3" Name="cbbRedmineAddress" IsEditable="True">
+                <ComboBox.Items>
+                </ComboBox.Items>
+            </ComboBox>
+            <TextBox Grid.Column="1" Grid.Row="1" Margin="3" Name="txtLogin"/>
+            <PasswordBox Grid.Column="1" Grid.Row="2" Margin="3" Name="txtPassword" KeyDown="txtPassword_KeyDown" />
+            <CheckBox Name="ckbPersistLogin" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="3, 0, 0, 0" />
+            <TextBlock Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" Margin="20, 0, 0, 0">Permanecer logado</TextBlock>
+            <Button Background="#A6BDFF" BorderBrush="#7C96F9" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="3" Name="btnLogin" Click="btnLogin_Click">
+                <TextBlock Margin="5">Login</TextBlock>
+            </Button>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,24 @@
+﻿<Window x:Class="FTTW.CloseDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FTTW"
+        mc:Ignorable="d"
+        Title="Fechar o aplicativo" Height="170" Width="400"
+        ResizeMode="NoResize">
+    <Grid Margin="20">
+        <TextBlock HorizontalAlignment="Center">Deseja manter o programa rodando em segundo plano?</TextBlock>
+        <CheckBox Margin="0,30,300,0" HorizontalAlignment="Right" Name="ckbRemember"/>
+        <TextBlock Margin="0,30,170,0" HorizontalAlignment="Right">Lembrar minha escolha</TextBlock>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,220,10" Background="WhiteSmoke" Name="btnYes" Click="btnYes_Click">
+            <TextBlock Margin="3,1,3,1">Sim</TextBlock>
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,100,10" Background="WhiteSmoke" Name="btnNo" Click="btnNo_Click">
+            <TextBlock Margin="3,1,3,1">Não</TextBlock>
+        </Button>
+        <Button HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="220,0,0,10" Background="WhiteSmoke" Name="btnCancel" Click="btnCancel_Click">
+            <TextBlock Margin="3,1,3,1">Cancelar</TextBlock>
+        </Button>
+    </Grid>
+</Window>

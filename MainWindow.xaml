@@ -1,0 +1,197 @@
+﻿<Window x:Class="FTTW.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FTTW"
+        mc:Ignorable="d"
+        Title="Apontador de horas trabalhadas" Height="550" Width="920"
+        MinWidth="920"
+        MinHeight="390"
+        Icon="icons/clock.png"
+        >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="18"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" BorderBrush="LightGray" BorderThickness="1,1,1,1" Background="{x:Null}" Margin="10" />
+            <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="1,1,1,1" Background="{x:Null}" Margin="10,10,10,0"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="200"/>
+                </Grid.RowDefinitions>
+                <Border Grid.Row="1" BorderBrush="LightGray" BorderThickness="0,0,0,1" Background="{x:Null}" Margin="12"/>
+                <WrapPanel Margin="15" Orientation="Vertical" HorizontalAlignment="Center">
+                    <TextBlock Grid.Column="0" FontSize="32" TextAlignment="Center" VerticalAlignment="Top" Margin="6" Name="lblTime">00:00:00</TextBlock>
+                    <Button HorizontalAlignment="Center" BorderBrush="#79DB75" Background="#AAE5AA" BorderThickness="1" Name="btnStartStop" Click="btnStartStop_Click">
+                        <TextBlock Margin="5" FontSize="18" Name="lblStartStop">Iniciar</TextBlock>
+                    </Button>
+                    <TextBlock Grid.Column="0" FontSize="14" TextAlignment="Center" Name="lblWorkingOnIssue"/>
+                </WrapPanel>
+                <DataGrid AutoGenerateColumns="False" CanUserSortColumns="False" IsReadOnly="True" GridLinesVisibility="None" BorderThickness="0" HeadersVisibility="None"
+                          Background="White" CanUserResizeColumns="False" CanUserResizeRows="False" RowHeaderWidth="0" Margin="15" Name="dgHistory" ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      Grid.Row="1" SelectionChanged="dgHistory_SelectionChanged">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Width="25" >
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Background="White" BorderBrush="White" Name="btnSidePlay" Click="btnPlay_Click" ClickMode="Press">
+                                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Image Width="22" Height="22">
+                                                <Image.Style>
+                                                    <Style TargetType="{x:Type Image}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding IsActive}" Value="false">
+                                                                <Setter Property="Source" Value="icons/start.png"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding IsActive}" Value="true">
+                                                                <Setter Property="Source" Value="icons/pause.png"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Image.Style>
+                                            </Image>
+                                        </StackPanel>
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="Projeto" Binding="{Binding Project}" Width="90" />
+                        <DataGridTextColumn Header="Tarefa" Binding="{Binding Task}" Width="45" />
+                        <DataGridTextColumn Header="Tempo" Binding="{Binding Time}" Width="50" />
+                    </DataGrid.Columns>
+                </DataGrid>
+                <WrapPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center">
+                    <TextBlock HorizontalAlignment="Center" TextAlignment="Center" FontSize="20" Margin="4">Última semana</TextBlock>
+                    <DataGrid AutoGenerateColumns="False" Name="dgLastWeek" BorderThickness="0" BorderBrush="Black" IsReadOnly="True" GridLinesVisibility="None"
+                          Background="White" CanUserSortColumns="False" CanUserResizeRows="False" CanUserResizeColumns="False" RowHeaderWidth="0" Margin="5">
+                        <DataGrid.Resources>
+                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                <Setter Property="Background" Value="#EEEEFF" />
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.CellStyle>
+                            <Style TargetType="{x:Type DataGridCell}" >
+                                <Setter Property="BorderBrush" Value="White"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="White"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.CellStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Dia" Binding="{Binding Day}" Width="100"/>
+                            <DataGridTextColumn Header="Horas" Binding="{Binding Time}" Width="60"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </WrapPanel>
+            </Grid>
+            <ComboBox Grid.Column="1" Name="cbProjects" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,15,0,0" SelectionChanged="cbProjects_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" Foreground="{Binding Path=ForegroundColor}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ComboBox Grid.Column="1" Name="cbServers" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,15,315, 0" Width="150" SelectionChanged="cbServers_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button Grid.Column="1" x:Name="btnAddServer" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,15,220,0" Content="Novo servidor" Padding="4,3,4,2"
+                    Background="#DDEEDD" Click="btnAddServer_Click"/>
+            <Button Grid.Column="1" x:Name="btnLogout" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,15,110,0" Click="btnLogout_Click" Padding="4,3,4,2"
+                Background="#FFEEEE" Content="Sair deste servidor"/>
+            <Button Grid.Column="1" x:Name="btnSettings" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,15,20,0" Padding="4,3,4,2"
+                Background="WhiteSmoke" Content="Configurações" Click="btnSettings_Click" />
+            
+            <DataGrid Grid.Column="1" Name="dgTasks" Margin="20,40,20,36" AutoGenerateColumns="False" RowHeight="20" SelectionMode="Single" IsReadOnly="True"
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="White" SelectionChanged="dgTasks_SelectionChanged">
+                <DataGrid.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                   Color="#B3DBF2"/>
+                </DataGrid.Resources>
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsActive}" Value="true">
+                                <Setter Property="Background" Value="#AAE5AA"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <Grid Background="#B3DBF2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Background="#B3DBF2" Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                            <Button Margin="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Background="#C0E9FF" Name="btnWeb"
+                                    ClickMode="Release" Click="btnWeb_Click">
+                                <TextBlock Text="Abrir na web" Margin="2, 0, 2, 0" />
+                            </Button>
+                            
+                        </Grid>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="25" >
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Background="White" BorderBrush="White" Name="btnPlay" Click="btnPlay_Click" ClickMode="Press">
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <Image Width="22" Height="22">
+                                            <Image.Style>
+                                                <Style TargetType="{x:Type Image}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsActive}" Value="false">
+                                                            <Setter Property="Source" Value="icons/start.png"/>
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsActive}" Value="true">
+                                                            <Setter Property="Source" Value="icons/pause.png"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Image.Style>
+                                        </Image>
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="30" />
+                    <DataGridTextColumn Header="Nome" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="Tempo" Binding="{Binding TimeString}" Width="60"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,155,10">
+            Filtro:
+            </TextBlock>
+            <TextBox Name="txtIssueFilter" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,20,10" Width="130" KeyUp="txtIssueFilter_KeyUp" />
+        </Grid>
+        <Button HorizontalAlignment="Right" VerticalAlignment="Center" Grid.Row="1" Margin="0,0,5,0" 
+                Name="btnMinimizeFromFull" Click="btnMinimizeFromFull_Click" Background="White" BorderBrush="White">
+            <StackPanel>
+                <Image Name="imgMinimize" Source="icons/arrow_left.png" Width="18" Height="18"></Image>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>
